@@ -13,622 +13,148 @@
             --light: #DEF2F1;
             --background: white;
         }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        body {
-            background-color: var(--background);
-            color: var(--primary);
-            line-height: 1.6;
-            min-height: 100vh;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
+        * { margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: var(--background); color: var(--primary); line-height:1.6; min-height:100vh; }
+        .container { width:100%; max-width:1200px; margin:0 auto; padding:0 20px; }
 
         /* Auth Pages Container */
-        .auth-container {
-            display: flex;
-            min-height: 100vh;
-        }
+        .auth-container { display:flex; min-height:100vh; }
+        .auth-left { flex:1; background: linear-gradient(135deg, var(--primary), var(--secondary)); color:white; display:flex; flex-direction:column; justify-content:center; padding:40px; position:relative; overflow:hidden; }
+        .auth-left::before { content:''; position:absolute; inset:0; background:url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') center/cover; opacity:0.2; }
+        .auth-left-content { position:relative; z-index:2; }
+        .auth-left h1 { font-size:2.5rem; margin-bottom:20px; }
+        .auth-left p { font-size:1.1rem; margin-bottom:30px; max-width:500px; }
+        .auth-right { flex:1; display:flex; flex-direction:column; justify-content:center; padding:40px; background-color:var(--background); }
+        .auth-form { max-width:400px; width:100%; margin:0 auto; }
+        .auth-form h2 { font-size:2rem; margin-bottom:30px; color:var(--primary); text-align:center; }
+        .form-group { margin-bottom:20px; }
+        .form-group label { display:block; margin-bottom:8px; font-weight:600; color:var(--primary); }
+        .form-control { width:100%; padding:12px 15px; border:1px solid #ddd; border-radius:5px; font-size:1rem; transition:border-color 0.3s; }
+        .form-control:focus { outline:none; border-color:var(--secondary); }
+        .btn { padding:12px 20px; border-radius:5px; font-weight:600; cursor:pointer; transition:all 0.3s; border:none; font-size:1rem; width:100%; }
+        .btn-primary { background-color:var(--secondary); color:white; }
+        .btn-primary:hover { background-color:var(--accent); }
+        .btn-outline { background-color:transparent; border:2px solid var(--secondary); color:var(--secondary); }
+        .btn-outline:hover { background-color:var(--secondary); color:white; }
+        .auth-footer { text-align:center; margin-top:20px; }
+        .auth-footer a { color:var(--secondary); text-decoration:none; font-weight:600; }
+        .auth-footer a:hover { text-decoration:underline; }
+        .admin-link { text-align:center; margin-top:20px; }
+        .admin-link a { color:var(--primary); text-decoration:none; font-size:0.9rem; }
+        .admin-link a:hover { text-decoration:underline; }
+
+        /* Header */
+        header { background-color:white; box-shadow:0 2px 10px rgba(0,0,0,0.1); position:sticky; top:0; z-index:100; }
+        .navbar { display:flex; justify-content:space-between; align-items:center; padding:15px 0; }
+        .logo { display:flex; align-items:center; gap:10px; }
+        .logo img { height:40px; }
+        .logo h1 { color:var(--primary); font-size:24px; font-weight:700; }
+        .nav-links { display:flex; gap:25px; }
+        .nav-links a { text-decoration:none; color:var(--primary); font-weight:500; transition:color 0.3s; }
+        .nav-links a:hover { color:var(--secondary); }
+        .user-profile { display:flex; align-items:center; gap:15px; }
+        .user-avatar { width:40px; height:40px; border-radius:50%; background-color:var(--light); display:flex; align-items:center; justify-content:center; color:var(--secondary); font-weight:bold; text-transform:uppercase; }
+        .mobile-menu-btn { display:none; background:none; border:none; font-size:24px; color:var(--primary); cursor:pointer; }
+
+        /* Dashboard */
+        .dashboard { display:flex; min-height:calc(100vh - 70px); }
+        .sidebar { width:250px; background-color:var(--primary); color:white; padding:30px 0; }
+        .sidebar-menu { list-style:none; }
+        .sidebar-menu li { margin-bottom:5px; }
+        .sidebar-menu a { display:flex; align-items:center; padding:12px 20px; color:white; text-decoration:none; transition:background-color 0.3s; }
+        .sidebar-menu a:hover, .sidebar-menu a.active { background-color:var(--secondary); }
+        .sidebar-menu i { margin-right:10px; width:20px; text-align:center; }
+        .main-content { flex:1; padding:30px; background-color:#f9f9f9; }
+        .welcome-banner { background:linear-gradient(135deg, var(--secondary), var(--accent)); color:white; padding:30px; border-radius:10px; margin-bottom:30px; display:flex; justify-content:space-between; align-items:center; }
+        .welcome-text h2 { font-size:1.8rem; margin-bottom:10px; }
+        .points-badge { background-color:white; color:var(--secondary); padding:10px 20px; border-radius:50px; font-weight:bold; display:flex; align-items:center; }
+        .points-badge i { margin-right:8px; }
+        .card { background-color:white; border-radius:10px; padding:25px; margin-bottom:30px; box-shadow:0 5px 15px rgba(0,0,0,0.05); }
+        .card-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; }
+        .card-header h3 { color:var(--primary); }
+        .btn-sm { padding:8px 15px; font-size:0.9rem; }
+        .experience-form .form-group { margin-bottom:15px; }
+        .anonymous-toggle { display:flex; align-items:center; margin-bottom:20px; }
+        .toggle-switch { position:relative; display:inline-block; width:50px; height:24px; margin-right:10px; }
+        .toggle-switch input { opacity:0; width:0; height:0; }
+        .slider { position:absolute; cursor:pointer; inset:0; background-color:#ccc; transition:.4s; border-radius:24px; }
+        .slider:before { position:absolute; content:""; height:16px; width:16px; left:4px; bottom:4px; background-color:white; transition:.4s; border-radius:50%; }
+        input:checked + .slider { background-color:var(--secondary); }
+        input:checked + .slider:before { transform:translateX(26px); }
+        .experience-list { display:grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap:20px; }
+        .experience-item { background-color:white; border-radius:10px; padding:20px; box-shadow:0 5px 15px rgba(0,0,0,0.05); transition:transform 0.3s; }
+        .experience-item:hover { transform:translateY(-5px); }
+        .experience-header { display:flex; justify-content:space-between; margin-bottom:15px; }
+        .company-info { display:flex; align-items:center; gap:10px; }
+        .company-logo { width:40px; height:40px; background-color:var(--light); border-radius:50%; display:flex; justify-content:center; align-items:center; color:var(--secondary); font-weight:bold; }
+        .job-type { background-color:var(--secondary); color:white; padding:3px 10px; border-radius:20px; font-size:0.8rem; }
+        .experience-item h4 { color:var(--primary); margin-bottom:10px; }
+        .experience-item p { color:#666; font-size:0.9rem; margin-bottom:10px; }
+        .experience-meta { display:flex; justify-content:space-between; margin-top:15px; font-size:0.8rem; color:#888; }
+        .actions { display:flex; gap:10px; margin-top:10px; }
+        .file-links { margin-top:8px; font-size:0.9rem; }
+        .file-links a { display:inline-block; margin-right:8px; text-decoration:none; }
+
+        .rewards-container { display:grid; grid-template-columns:repeat(auto-fill, minmax(200px, 1fr)); gap:20px; margin-top:20px; }
+        .reward-item { background-color:white; border-radius:10px; padding:20px; text-align:center; box-shadow:0 5px 15px rgba(0,0,0,0.05); transition:transform 0.3s; }
+        .reward-item:hover { transform:translateY(-5px); }
+        .reward-item i { font-size:2rem; color:var(--secondary); margin-bottom:10px; }
+        .reward-points { font-weight:bold; color:var(--secondary); margin:10px 0; }
+
+        /* Settings Styles */
+        .settings-header { margin-bottom:30px; }
+        .settings-header h2 { font-size:1.8rem; color:var(--primary); margin-bottom:10px; }
+        .settings-header p { color:#666; }
+        .settings-divider { height:1px; background-color:#ddd; margin:25px 0; }
+        .settings-section { margin-bottom:40px; }
+        .settings-section h3 { font-size:1.4rem; color:var(--primary); margin-bottom:20px; }
+        .settings-item { display:flex; justify-content:space-between; align-items:center; padding:15px 0; border-bottom:1px solid #eee; }
+        .settings-item:last-child { border-bottom:none; }
+        .settings-info { flex:1; }
+        .settings-info h4 { font-size:1rem; color:var(--primary); margin-bottom:5px; }
+        .settings-info p { font-size:0.9rem; color:#777; }
+        .select-container { position:relative; width:200px; }
+        .select-container select { width:100%; padding:8px 15px; border:1px solid #ddd; border-radius:5px; background-color:white; appearance:none; font-size:0.9rem; }
+        .select-container::after { content:"\f078"; font-family:"Font Awesome 5 Free"; font-weight:900; position:absolute; right:10px; top:50%; transform:translateY(-50%); color:#777; pointer-events:none; }
+        .app-info { padding:15px 0; }
+        .app-info p { margin-bottom:10px; color:#777; }
+        .app-version { font-weight:600; color:var(--secondary) !important; }
 
-        .auth-left {
-            flex: 1;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            padding: 40px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .auth-left::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') center/cover;
-            opacity: 0.2;
-        }
-
-        .auth-left-content {
-            position: relative;
-            z-index: 2;
-        }
-
-        .auth-left h1 {
-            font-size: 2.5rem;
-            margin-bottom: 20px;
-        }
-
-        .auth-left p {
-            font-size: 1.1rem;
-            margin-bottom: 30px;
-            max-width: 500px;
-        }
-
-        .auth-right {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            padding: 40px;
-            background-color: var(--background);
-        }
-
-        .auth-form {
-            max-width: 400px;
-            width: 100%;
-            margin: 0 auto;
-        }
-
-        .auth-form h2 {
-            font-size: 2rem;
-            margin-bottom: 30px;
-            color: var(--primary);
-            text-align: center;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            color: var(--primary);
-        }
-
-        .form-control {
-            width: 100%;
-            padding: 12px 15px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 1rem;
-            transition: border-color 0.3s;
-        }
-
-        .form-control:focus {
-            outline: none;
-            border-color: var(--secondary);
-        }
-
-        .btn {
-            padding: 12px 20px;
-            border-radius: 5px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            border: none;
-            font-size: 1rem;
-            width: 100%;
-        }
-
-        .btn-primary {
-            background-color: var(--secondary);
-            color: white;
-        }
-
-        .btn-primary:hover {
-            background-color: var(--accent);
-        }
-
-        .btn-outline {
-            background-color: transparent;
-            border: 2px solid var(--secondary);
-            color: var(--secondary);
-        }
-
-        .btn-outline:hover {
-            background-color: var(--secondary);
-            color: white;
-        }
-
-        .auth-footer {
-            text-align: center;
-            margin-top: 20px;
-        }
-
-        .auth-footer a {
-            color: var(--secondary);
-            text-decoration: none;
-            font-weight: 600;
-        }
-
-        .auth-footer a:hover {
-            text-decoration: underline;
-        }
-
-        /* Admin Login Link */
-        .admin-link {
-            text-align: center;
-            margin-top: 20px;
-        }
-
-        .admin-link a {
-            color: var(--primary);
-            text-decoration: none;
-            font-size: 0.9rem;
-        }
-
-        .admin-link a:hover {
-            text-decoration: underline;
-        }
-
-        /* Header Styles */
-        header {
-            background-color: white;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        .navbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 0;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .logo img {
-            height: 40px;
-        }
-
-        .logo h1 {
-            color: var(--primary);
-            font-size: 24px;
-            font-weight: 700;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 25px;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: var(--primary);
-            font-weight: 500;
-            transition: color 0.3s;
-        }
-
-        .nav-links a:hover {
-            color: var(--secondary);
-        }
-
-        .user-profile {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .user-avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background-color: var(--light);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--secondary);
-            font-weight: bold;
-            text-transform: uppercase;
-        }
-
-        .mobile-menu-btn {
-            display: none;
-            background: none;
-            border: none;
-            font-size: 24px;
-            color: var(--primary);
-            cursor: pointer;
-        }
-
-        /* Dashboard Styles */
-        .dashboard {
-            display: flex;
-            min-height: calc(100vh - 70px);
-        }
-
-        .sidebar {
-            width: 250px;
-            background-color: var(--primary);
-            color: white;
-            padding: 30px 0;
-        }
-
-        .sidebar-menu {
-            list-style: none;
-        }
-
-        .sidebar-menu li {
-            margin-bottom: 5px;
-        }
-
-        .sidebar-menu a {
-            display: flex;
-            align-items: center;
-            padding: 12px 20px;
-            color: white;
-            text-decoration: none;
-            transition: background-color 0.3s;
-        }
-
-        .sidebar-menu a:hover, .sidebar-menu a.active {
-            background-color: var(--secondary);
-        }
-
-        .sidebar-menu i {
-            margin-right: 10px;
-            width: 20px;
-            text-align: center;
-        }
-
-        .main-content {
-            flex: 1;
-            padding: 30px;
-            background-color: #f9f9f9;
-        }
-
-        .welcome-banner {
-            background: linear-gradient(135deg, var(--secondary), var(--accent));
-            color: white;
-            padding: 30px;
-            border-radius: 10px;
-            margin-bottom: 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .welcome-text h2 {
-            font-size: 1.8rem;
-            margin-bottom: 10px;
-        }
-
-        .points-badge {
-            background-color: white;
-            color: var(--secondary);
-            padding: 10px 20px;
-            border-radius: 50px;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-        }
-
-        .points-badge i {
-            margin-right: 8px;
-        }
-
-        .card {
-            background-color: white;
-            border-radius: 10px;
-            padding: 25px;
-            margin-bottom: 30px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-        }
-
-        .card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .card-header h3 {
-            color: var(--primary);
-        }
-
-        .btn-sm {
-            padding: 8px 15px;
-            font-size: 0.9rem;
-        }
-
-        .experience-form .form-group {
-            margin-bottom: 15px;
-        }
-
-        .anonymous-toggle {
-            display: flex;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .toggle-switch {
-            position: relative;
-            display: inline-block;
-            width: 50px;
-            height: 24px;
-            margin-right: 10px;
-        }
-
-        .toggle-switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-
-        .slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: #ccc;
-            transition: .4s;
-            border-radius: 24px;
-        }
-
-        .slider:before {
-            position: absolute;
-            content: "";
-            height: 16px;
-            width: 16px;
-            left: 4px;
-            bottom: 4px;
-            background-color: white;
-            transition: .4s;
-            border-radius: 50%;
-        }
-
-        input:checked + .slider {
-            background-color: var(--secondary);
-        }
-
-        input:checked + .slider:before {
-            transform: translateX(26px);
-        }
-
-        .experience-list {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
-        }
-
-        .experience-item {
-            background-color: white;
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s;
-        }
-
-        .experience-item:hover {
-            transform: translateY(-5px);
-        }
-
-        .experience-header {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 15px;
-        }
-
-        .company-info {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .company-logo {
-            width: 40px;
-            height: 40px;
-            background-color: var(--light);
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: var(--secondary);
-            font-weight: bold;
-        }
-
-        .job-type {
-            background-color: var(--secondary);
-            color: white;
-            padding: 3px 10px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-        }
-
-        .experience-item h4 {
-            color: var(--primary);
-            margin-bottom: 10px;
-        }
-
-        .experience-item p {
-            color: #666;
-            font-size: 0.9rem;
-            margin-bottom: 10px;
-        }
-
-        .experience-meta {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 15px;
-            font-size: 0.8rem;
-            color: #888;
-        }
-
-        .rewards-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
-        }
-
-        .reward-item {
-            background-color: white;
-            border-radius: 10px;
-            padding: 20px;
-            text-align: center;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s;
-        }
-
-        .reward-item:hover {
-            transform: translateY(-5px);
-        }
-
-        .reward-item i {
-            font-size: 2rem;
-            color: var(--secondary);
-            margin-bottom: 10px;
-        }
-
-        .reward-points {
-            font-weight: bold;
-            color: var(--secondary);
-            margin: 10px 0;
-        }
-
-        /* Responsive Styles */
+        /* Responsive */
         @media (max-width: 992px) {
-            .auth-container {
-                flex-direction: column;
-            }
-            
-            .auth-left, .auth-right {
-                padding: 30px 20px;
-            }
-            
-            .auth-left {
-                text-align: center;
-            }
-            
-            .auth-left p {
-                margin: 0 auto 20px;
-            }
-            
-            .dashboard {
-                flex-direction: column;
-            }
-            
-            .sidebar {
-                width: 100%;
-                padding: 15px 0;
-            }
-            
-            .sidebar-menu {
-                display: flex;
-                overflow-x: auto;
-                padding: 0 15px;
-            }
-            
-            .sidebar-menu li {
-                margin-bottom: 0;
-                margin-right: 10px;
-                white-space: nowrap;
-            }
-            
-            .sidebar-menu a {
-                padding: 10px 15px;
-            }
+            .auth-container { flex-direction:column; }
+            .auth-left, .auth-right { padding:30px 20px; }
+            .auth-left { text-align:center; }
+            .auth-left p { margin:0 auto 20px; }
+            .dashboard { flex-direction:column; }
+            .sidebar { width:100%; padding:15px 0; }
+            .sidebar-menu { display:flex; overflow-x:auto; padding:0 15px; }
+            .sidebar-menu li { margin-bottom:0; margin-right:10px; white-space:nowrap; }
+            .sidebar-menu a { padding:10px 15px; }
+            .settings-item { flex-direction:column; align-items:flex-start; }
+            .toggle-switch, .select-container { margin-top:10px; }
         }
-
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-                position: absolute;
-                top: 70px;
-                left: 0;
-                right: 0;
-                background-color: white;
-                flex-direction: column;
-                padding: 20px;
-                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
-            }
-
-            .nav-links.active {
-                display: flex;
-            }
-
-            .mobile-menu-btn {
-                display: block;
-            }
-            
-            .welcome-banner {
-                flex-direction: column;
-                text-align: center;
-            }
-            
-            .points-badge {
-                margin-top: 15px;
-            }
+        @media (max-width:768px){
+            .nav-links{ display:none; position:absolute; top:70px; left:0; right:0; background:white; flex-direction:column; padding:20px; box-shadow:0 5px 10px rgba(0,0,0,0.1); }
+            .nav-links.active{ display:flex; }
+            .mobile-menu-btn{ display:block; }
+            .welcome-banner{ flex-direction:column; text-align:center; }
+            .points-badge{ margin-top:15px; }
         }
-
-        @media (max-width: 576px) {
-            .experience-list, .rewards-container {
-                grid-template-columns: 1fr;
-            }
+        @media (max-width:576px){ 
+            .experience-list, .rewards-container{ grid-template-columns:1fr; } 
+            .select-container { width:100%; }
         }
 
         /* Animation */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        @keyframes fadeIn { from{opacity:0; transform:translateY(20px);} to{opacity:1; transform:translateY(0);} }
+        .fade-in{ animation:fadeIn 0.8s ease-out forwards; }
+        .delay-1{ animation-delay:0.2s; } .delay-2{ animation-delay:0.4s; } .delay-3{ animation-delay:0.6s; }
 
-        .fade-in {
-            animation: fadeIn 0.8s ease-out forwards;
-        }
-
-        .delay-1 {
-            animation-delay: 0.2s;
-        }
-
-        .delay-2 {
-            animation-delay: 0.4s;
-        }
-
-        .delay-3 {
-            animation-delay: 0.6s;
-        }
-        
-        /* Hidden class for page switching */
-        .hidden {
-            display: none;
-        }
+        /* page switching */
+        .hidden{ display:none; }
+        .section{ display:none; }
+        .section.active{ display:block; }
     </style>
 </head>
 <body>
@@ -656,7 +182,7 @@
                     <button type="submit" class="btn btn-primary">Login</button>
                 </form>
                 <div class="auth-footer">
-                    <p>Forgot your password? <a href="#">Reset it here</a></p>
+                    <p>Forgot your password? <a href="#" id="resetPasswordLink">Reset it here</a></p>
                 </div>
                 <div class="admin-link">
                     <a href="#" id="showAdminLogin">Admin Login</a>
@@ -744,16 +270,9 @@
             <div class="container">
                 <nav class="navbar">
                     <div class="logo">
-                        <!-- ✅ Only the logo image is shown. No "X Share" / "Campus to Career" text next to logo -->
-                        <!-- If your logo file is placed beside this HTML, this relative path will work -->
-                        <img src="Xshare LOGO.jpg" alt="XShare Logo">
-                        <!-- Removed: <h1>XShare</h1> -->
+                        <div style="width:40px; height:40px; background:var(--secondary); border-radius:8px; display:flex; align-items:center; justify-content:center; color:white; font-weight:bold;">X</div>
+                        <h1>XShare</h1>
                     </div>
-                    
-                    <!-- Removed the top navigation items as per your instruction -->
-                    <!-- <button class="mobile-menu-btn" id="menuBtn"><i class="fas fa-bars"></i></button> -->
-                    <!-- <div class="nav-links" id="navLinks"> ... </div> -->
-
                     <div class="user-profile">
                         <div class="user-avatar" id="userAvatar">U</div>
                         <span id="userNameTop">User</span>
@@ -767,311 +286,920 @@
             <!-- Sidebar -->
             <div class="sidebar">
                 <ul class="sidebar-menu">
-                    <li><a href="#dashboard" class="active"><i class="fas fa-home"></i> Dashboard</a></li>
-                    <li><a href="#share-experience"><i class="fas fa-share-alt"></i> Share Experience</a></li>
-                    <li><a href="#my-experiences"><i class="fas fa-history"></i> My Experiences</a></li>
-                    <li><a href="#my-questions"><i class="fas fa-question-circle"></i> My Questions</a></li>
-                    <li><a href="#bookmarks"><i class="fas fa-bookmark"></i> Bookmarks</a></li>
-                    <li><a href="#notifications"><i class="fas fa-bell"></i> Notifications</a></li>
-                    <li><a href="#settings"><i class="fas fa-cog"></i> Settings</a></li>
-                    <li><a href="#logout" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                    <li><a href="#" class="nav-link active" data-section="dashboard"><i class="fas fa-home"></i> Dashboard</a></li>
+                    <li><a href="#" class="nav-link" data-section="share-experience"><i class="fas fa-share-alt"></i> Share Experience</a></li>
+                    <li><a href="#" class="nav-link" data-section="my-experiences"><i class="fas fa-history"></i> My Experiences</a></li>
+                    <li><a href="#" class="nav-link" data-section="my-questions"><i class="fas fa-question-circle"></i> My Questions</a></li>
+                    <li><a href="#" class="nav-link" data-section="bookmarks"><i class="fas fa-bookmark"></i> Bookmarks</a></li>
+                    <li><a href="#" class="nav-link" data-section="notifications"><i class="fas fa-bell"></i> Notifications</a></li>
+                    <li><a href="#" class="nav-link" data-section="settings"><i class="fas fa-cog"></i> Settings</a></li>
+                    <li><a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
                 </ul>
             </div>
 
             <!-- Main Content -->
             <div class="main-content">
-                <!-- Welcome Banner -->
-                <div class="welcome-banner">
-                    <div class="welcome-text">
-                        <!-- ✅ Dynamic name will be inserted here -->
-                        <h2>Welcome back, <span id="welcomeName">User</span>!</h2>
-                        <p>Ready to share your latest interview experience or ask a question?</p>
+                <!-- Dashboard Section -->
+                <div id="dashboard-section" class="section active">
+                    <div class="welcome-banner">
+                        <div class="welcome-text">
+                            <h2>Welcome back, <span id="userName">User</span>!</h2>
+                            <p>Ready to continue your career preparation journey?</p>
+                        </div>
+                        <div class="points-badge">
+                            <i class="fas fa-star"></i>
+                            <span>245 Points</span>
+                        </div>
                     </div>
-                    <div class="points-badge">
-                        <i class="fas fa-coins"></i>
-                        <span>1,250 Points</span>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>Recent Experiences</h3>
+                            <button class="btn btn-primary btn-sm">View All</button>
+                        </div>
+                        <div class="experience-list">
+                            <div class="experience-item">
+                                <div class="experience-header">
+                                    <div class="company-info">
+                                        <div class="company-logo">G</div>
+                                        <div>
+                                            <h4>Google</h4>
+                                            <div class="job-type">Software Engineer</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p>The interview process was challenging but fair. Focus on data structures and algorithms.</p>
+                                <div class="experience-meta">
+                                    <span><i class="far fa-thumbs-up"></i> 24</span>
+                                    <span>2 days ago</span>
+                                </div>
+                            </div>
+                            <div class="experience-item">
+                                <div class="experience-header">
+                                    <div class="company-info">
+                                        <div class="company-logo">A</div>
+                                        <div>
+                                            <h4>Amazon</h4>
+                                            <div class="job-type">Product Manager</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p>Behavioral questions were key. They really value leadership principles.</p>
+                                <div class="experience-meta">
+                                    <span><i class="far fa-thumbs-up"></i> 18</span>
+                                    <span>5 days ago</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Rewards -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>Your Rewards</h3>
+                            <button class="btn btn-outline btn-sm">Redeem History</button>
+                        </div>
+                        <p>Earn points by sharing experiences and answering questions. Redeem them for exciting rewards!</p>
+                        <div class="rewards-container">
+                            <div class="reward-item">
+                                <i class="fas fa-wine-bottle"></i>
+                                <div class="reward-points">500 points</div>
+                                <p>Water Bottle & Stickers</p>
+                                <button class="btn btn-primary btn-sm" style="margin-top: 10px;">Redeem</button>
+                            </div>
+                            <div class="reward-item">
+                                <i class="fas fa-headphones"></i>
+                                <div class="reward-points">1,000 points</div>
+                                <p>Premium Headphones</p>
+                                <button class="btn btn-outline btn-sm" style="margin-top: 10px;">Coming Soon</button>
+                            </div>
+                            <div class="reward-item">
+                                <i class="fas fa-briefcase"></i>
+                                <div class="reward-points">2,000 points</div>
+                                <p>Premium Bags</p>
+                                <button class="btn btn-outline btn-sm" style="margin-top: 10px;">Coming Soon</button>
+                            </div>
+                            <div class="reward-item">
+                                <i class="fas fa-backpack"></i>
+                                <div class="reward-points">5,000 points</div>
+                                <p>High-quality Backpack</p>
+                                <button class="btn btn-outline btn-sm" style="margin-top: 10px;">Coming Soon</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Share Experience Card -->
-                <div class="card" id="share-experience">
-                    <div class="card-header">
-                        <h3>Share Your Experience</h3>
+                <!-- Share Experience Section (All Shared) -->
+                <div id="share-experience-section" class="section">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>All Shared Experiences</h3>
+                        </div>
+                        <div class="experience-list" id="shared-experiences-list"></div>
                     </div>
-                    <form class="experience-form">
-                        <div class="anonymous-toggle">
+                </div>
+
+                <!-- My Experiences Section -->
+                <div id="my-experiences-section" class="section">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>Share Your Experience</h3>
+                        </div>
+                        <form class="experience-form" id="experienceForm">
+                            <div class="anonymous-toggle">
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="anonymousToggle">
+                                    <span class="slider"></span>
+                                </label>
+                                <span>Post anonymously</span>
+                            </div>
+                            <div class="form-group">
+                                <label for="companyName">Company Name</label>
+                                <input type="text" id="companyName" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="jobRole">Job Role</label>
+                                <input type="text" id="jobRole" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="jobType">Job Type</label>
+                                <select id="jobType" class="form-control" required>
+                                    <option value="">Select job type</option>
+                                    <option value="Internship">Internship</option>
+                                    <option value="Full-time">Full-time</option>
+                                    <option value="Part-time">Part-time</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="experienceDetails">Experience Details</label>
+                                <textarea id="experienceDetails" class="form-control" rows="5" required></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="preparationTips">Preparation Tips</label>
+                                <textarea id="preparationTips" class="form-control" rows="3"></textarea>
+                            </div>
+                            <!-- Added file upload (PDF/JPG/JPEG) for Preparation Tips -->
+                            <div class="form-group">
+                                <label for="tipsFiles">Attach files (PDF, JPG, JPEG)</label>
+                                <input type="file" id="tipsFiles" class="form-control" accept=".pdf,.jpg,.jpeg" multiple>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Submit Experience</button>
+                        </form>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>My Experiences</h3>
+                        </div>
+                        <div class="experience-list" id="my-experiences-list"></div>
+                    </div>
+                </div>
+
+                <!-- My Questions Section -->
+                    
+    <div id="my-questions-section" class="section">
+        <div class="card">
+            <div class="card-header"><h3>Ask a Question</h3></div>
+            <form id="questionForm" class="experience-form">
+                <div class="form-group">
+                    <label for="questionTitle">Question Title</label>
+                    <input type="text" id="questionTitle" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="questionContent">Details</label>
+                    <textarea id="questionContent" class="form-control" rows="4" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="questionTags">Tags (comma separated)</label>
+                    <input type="text" id="questionTags" class="form-control">
+                </div>
+                <button type="submit" class="btn btn-primary">Post Question</button>
+            </form>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><h3>My Questions</h3></div>
+            <div id="my-questions-list"></div>
+        </div>
+
+        <!-- All Questions -->
+        <div class="card">
+            <div class="card-header"><h3>All Questions</h3></div>
+            <div id="all-questions-list"></div>
+        </div>
+    </div>
+
+                <!-- Bookmarks Section -->
+                <div id="bookmarks-section" class="section">
+                    <div class="card">
+                        <div class="card-header"><h3>Bookmarks</h3></div>
+                        <div class="experience-list" id="bookmarks-list"></div>
+                    </div>
+                </div>
+
+                <!-- Notifications Section -->
+                <div id="notifications-section" class="section">
+                    <div class="card">
+                        <div class="card-header"><h3>Notifications</h3></div>
+                        <p>Your notifications will appear here.</p>
+                    </div>
+                </div>
+
+                <!-- Settings Section -->
+                <div id="settings-section" class="section">
+                    <div class="settings-header">
+                        <h2>Settings</h2>
+                        <p>Manage your XShare preferences and account settings</p>
+                    </div>
+
+                    <div class="settings-section">
+                        <h3>Notifications</h3>
+                        <div class="settings-item">
+                            <div class="settings-info">
+                                <h4>Hide Scores</h4>
+                                <p>Hide point scores from your profile</p>
+                            </div>
                             <label class="toggle-switch">
-                                <input type="checkbox" id="anonymousToggle">
+                                <input type="checkbox">
                                 <span class="slider"></span>
                             </label>
-                            <span>Post anonymously</span>
                         </div>
-                        <div class="form-group">
-                            <label for="companyName">Company Name</label>
-                            <input type="text" id="companyName" class="form-control" required>
+                        <div class="settings-item">
+                            <div class="settings-info">
+                                <h4>Use Cellular Data for Videos and Images</h4>
+                                <p>Allow media to load when using mobile data</p>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" checked>
+                                <span class="slider"></span>
+                            </label>
                         </div>
-                        <div class="form-group">
-                            <label for="jobRole">Job Role</label>
-                            <input type="text" id="jobRole" class="form-control" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="jobType">Job Type</label>
-                            <select id="jobType" class="form-control" required>
-                                <option value="">Select job type</option>
-                                <option value="internship">Internship</option>
-                                <option value="fulltime">Full-time</option>
-                                <option value="parttime">Part-time</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="experienceDetails">Experience Details</label>
-                            <textarea id="experienceDetails" class="form-control" rows="5" required></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label for="preparationTips">Preparation Tips</label>
-                            <textarea id="preparationTips" class="form-control" rows="3"></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Submit Experience</button>
-                    </form>
-                </div>
+                    </div>
 
-                <!-- Recent Experiences -->
-                <div class="card" id="dashboard">
-                    <div class="card-header">
-                        <h3>Recent Shared Experiences</h3>
-                        <button class="btn btn-outline btn-sm">View All</button>
-                    </div>
-                    <div class="experience-list">
-                        <div class="experience-item">
-                            <div class="experience-header">
-                                <div class="company-info">
-                                    <div class="company-logo">G</div>
-                                    <div>
-                                        <h4>Google</h4>
-                                        <p>Software Engineer Intern</p>
-                                    </div>
-                                </div>
-                                <span class="job-type">Internship</span>
-                            </div>
-                            <p>Shared technical interview questions and coding challenges faced during the interview process.</p>
-                            <div class="experience-meta">
-                                <span>By: Anonymous</span>
-                                <span>2 days ago</span>
-                            </div>
-                        </div>
-                        <div class="experience-item" id="experiences">
-                            <div class="experience-header">
-                                <div class="company-info">
-                                    <div class="company-logo">A</div>
-                                    <div>
-                                        <h4>Amazon</h4>
-                                        <p>Product Manager</p>
-                                    </div>
-                                </div>
-                                <span class="job-type">Full-time</span>
-                            </div>
-                            <p>Case study interview focused on improving the checkout experience for Amazon Fresh.</p>
-                            <div class="experience-meta">
-                                <span>By: Sarah K.</span>
-                                <span>1 week ago</span>
-                            </div>
-                        </div>
-                        <div class="experience-item" id="resources">
-                            <div class="experience-header">
-                                <div class="company-info">
-                                    <div class="company-logo">M</div>
-                                    <div>
-                                        <h4>Microsoft</h4>
-                                        <p>Data Scientist</p>
-                                    </div>
-                                </div>
-                                <span class="job-type">Full-time</span>
-                            </div>
-                            <p>Technical rounds included SQL queries, Python coding, and machine learning concepts.</p>
-                            <div class="experience-meta">
-                                <span>By: Raj P.</span>
-                                <span>2 weeks ago</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                    <div class="settings-divider"></div>
 
-                <!-- Rewards Section -->
-                <div class="card" id="rewards">
-                    <div class="card-header">
-                        <h3>Your Rewards</h3>
-                        <button class="btn btn-outline btn-sm">Redeem History</button>
+                    <div class="settings-section">
+                        <h3>Preferences</h3>
+                        <div class="settings-item">
+                            <div class="settings-info">
+                                <h4>Language</h4>
+                                <p>Change app language</p>
+                            </div>
+                            <div class="select-container">
+                                <select>
+                                    <option selected>English</option>
+                                    <option>Spanish</option>
+                                    <option>French</option>
+                                    <option>German</option>
+                                    <option>Hindi</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="settings-item">
+                            <div class="settings-info">
+                                <h4>Location</h4>
+                                <p>Set your location for relevant content</p>
+                            </div>
+                            <div class="select-container">
+                                <select>
+                                    <option selected>United States</option>
+                                    <option>India</option>
+                                    <option>United Kingdom</option>
+                                    <option>Canada</option>
+                                    <option>Australia</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="settings-item">
+                            <div class="settings-info">
+                                <h4>Local Time</h4>
+                                <p>Set your timezone</p>
+                            </div>
+                            <div class="select-container">
+                                <select>
+                                    <option selected>(GMT-5:00) Eastern Time</option>
+                                    <option>(GMT-8:00) Pacific Time</option>
+                                    <option>(GMT+0:00) Greenwich Mean Time</option>
+                                    <option>(GMT+5:30) India Standard Time</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
-                    <p>Earn points by sharing experiences and answering questions. Redeem them for exciting rewards!</p>
-                    <div class="rewards-container">
-                        <div class="reward-item">
-                            <i class="fas fa-wine-bottle"></i>
-                            <div class="reward-points">500 points</div>
-                            <p>Water Bottle & Stickers</p>
-                            <button class="btn btn-primary btn-sm" style="margin-top: 10px;">Redeem</button>
+
+                    <div class="settings-divider"></div>
+
+                    <div class="settings-section">
+                        <h3>App Info</h3>
+                        <div class="app-info">
+                            <p class="app-version">XShare Version 2.1.0</p>
+                            <p>© 2023 XShare Inc. All rights reserved.</p>
+                            <p>From Campus to Career - Share interview experiences and learn from peers.</p>
                         </div>
-                        <div class="reward-item">
-                            <i class="fas fa-headphones"></i>
-                            <div class="reward-points">1,000 points</div>
-                            <p>Premium Headphones</p>
-                            <button class="btn btn-outline btn-sm" style="margin-top: 10px;">Coming Soon</button>
+                        <div class="settings-item">
+                            <div class="settings-info">
+                                <h4>Terms of Service</h4>
+                                <p>View our terms and conditions</p>
+                            </div>
+                            <a href="#" style="color: var(--secondary);">View</a>
                         </div>
-                        <div class="reward-item">
-                            <i class="fas fa-briefcase"></i>
-                            <div class="reward-points">2,000 points</div>
-                            <p>Premium Bags</p>
-                            <button class="btn btn-outline btn-sm" style="margin-top: 10px;">Coming Soon</button>
+                        <div class="settings-item">
+                            <div class="settings-info">
+                                <h4>Privacy Policy</h4>
+                                <p>How we handle your data</p>
+                            </div>
+                            <a href="#" style="color: var(--secondary);">View</a>
                         </div>
-                        <div class="reward-item">
-                            <i class="fas fa-backpack"></i>
-                            <div class="reward-points">5,000 points</div>
-                            <p>High-quality Backpack</p>
-                            <button class="btn btn-outline btn-sm" style="margin-top: 10px;">Coming Soon</button>
+                        <div class="settings-item">
+                            <div class="settings-info">
+                                <h4>Clear Cache</h4>
+                                <p>Free up storage space</p>
+                            </div>
+                            <button class="btn btn-outline" style="padding: 6px 12px; font-size: 0.9rem;">Clear</button>
                         </div>
                     </div>
                 </div>
+                <!-- End Settings Section -->
             </div>
         </div>
     </div>
 
     <script>
-        // DOM Elements
+        /* --------------------------
+           DOM Elements
+        ---------------------------*/
         const loginPage = document.getElementById('loginPage');
         const signupPage = document.getElementById('signupPage');
         const adminLoginPage = document.getElementById('adminLoginPage');
         const appContainer = document.getElementById('appContainer');
-        
+
         const showSignup = document.getElementById('showSignup');
         const showLogin = document.getElementById('showLogin');
         const showAdminLogin = document.getElementById('showAdminLogin');
         const showLoginFromAdmin = document.getElementById('showLoginFromAdmin');
-        
+
         const loginForm = document.getElementById('loginForm');
         const signupForm = document.getElementById('signupForm');
         const adminLoginForm = document.getElementById('adminLoginForm');
         const logoutBtn = document.getElementById('logoutBtn');
+        const experienceForm = document.getElementById('experienceForm');
 
-        // User display elements
         const userNameTop = document.getElementById('userNameTop');
         const userAvatar = document.getElementById('userAvatar');
-        const welcomeName = document.getElementById('welcomeName');
+        const welcomeName = document.getElementById('userName');
+        const pointsText = document.querySelector('.points-badge span');
 
-        // Helpers to set/get user name (simulate session without backend)
-        function getNameFromEmail(email) {
-            if (!email) return null;
+        const navLinks = document.querySelectorAll('.nav-link');
+        const sections = document.querySelectorAll('.section');
+
+        const sharedExperiencesList = document.getElementById('shared-experiences-list');
+        const myExperiencesList = document.getElementById('my-experiences-list');
+        const bookmarksList = document.getElementById('bookmarks-list');
+
+        const resetPasswordLink = document.getElementById('resetPasswordLink');
+
+        /* --------------------------
+           Sample Data
+        ---------------------------*/
+        const sampleExperiences = [
+            { id: 1, company: "Google",   role: "Software Engineer Intern", type: "Internship",
+              details: "Shared technical interview questions and coding challenges faced during the interview process.",
+              tips: "Practice data structures and algorithms thoroughly.", author: "Anonymous",
+              date: "2 days ago", userId: "user2", files: [] },
+            { id: 2, company: "Amazon",   role: "Product Manager", type: "Full-time",
+              details: "Case study interview focused on improving the checkout experience for Amazon Fresh.",
+              tips: "Prepare for product thinking questions and case studies.", author: "Sarah K.",
+              date: "1 week ago", userId: "user3", files: [] },
+            { id: 3, company: "Microsoft", role: "Data Scientist", type: "Full-time",
+              details: "Technical rounds included SQL queries, Python coding, and machine learning concepts.",
+              tips: "Brush up on statistics and ML fundamentals.", author: "Raj P.",
+              date: "2 weeks ago", userId: "user4", files: [] }
+        ];
+
+        /* --------------------------
+           Utilities
+        ---------------------------*/
+        const sanitize = (s) => (s || '').replace(/[<>]/g, '').trim();
+
+        function getNameFromEmail(email){
+            if(!email) return null;
             const namePart = email.split('@')[0] || '';
-            if (!namePart) return null;
-            return namePart
-                .replace(/[\.\_\-]+/g, ' ')
-                .trim()
-                .split(' ')
-                .map(s => s.charAt(0).toUpperCase() + s.slice(1))
-                .join(' ');
+            if(!namePart) return null;
+            return namePart.replace(/[\.\_\-]+/g,' ').trim().split(' ')
+                .map(s => s.charAt(0).toUpperCase() + s.slice(1)).join(' ');
         }
-
-        function initialsFromName(name) {
-            const parts = (name || '').trim().split(/\s+/);
-            if (!parts[0]) return 'U';
+        function initialsFromName(name){
+            const parts = (name||'').trim().split(/\s+/);
+            if(!parts[0]) return 'U';
             const first = parts[0].charAt(0);
-            const second = parts.length > 1 ? parts[1].charAt(0) : '';
+            const second = parts.length>1 ? parts[1].charAt(0) : '';
             return (first + second).toUpperCase();
         }
-
-        function updateUserUI() {
+        function updateUserUI(){
             const name = localStorage.getItem('userName') || 'User';
-            if (userNameTop) userNameTop.textContent = name;
-            if (welcomeName) welcomeName.textContent = name;
-            if (userAvatar) userAvatar.textContent = initialsFromName(name);
+            if(userNameTop) userNameTop.textContent = name;
+            if(welcomeName) welcomeName.textContent = name;
+            if(userAvatar) userAvatar.textContent = initialsFromName(name);
+            const points = parseInt(localStorage.getItem('userPoints') || '1250', 10);
+            if(pointsText) pointsText.textContent = points.toLocaleString() + ' Points';
         }
-
-        function setUserName(name) {
-            if (name && name.trim()) {
+        function setUserName(name, userId){
+            if(name && name.trim()){
                 localStorage.setItem('userName', name.trim());
+                localStorage.setItem('userId', userId);
             }
             updateUserUI();
         }
-        
-        // Show Signup Page
-        showSignup.addEventListener('click', (e) => {
-            e.preventDefault();
-            loginPage.classList.add('hidden');
-            signupPage.classList.remove('hidden');
-            adminLoginPage.classList.add('hidden');
-        });
-        
-        // Show Login Page
-        showLogin.addEventListener('click', (e) => {
-            e.preventDefault();
-            signupPage.classList.add('hidden');
-            loginPage.classList.remove('hidden');
-            adminLoginPage.classList.add('hidden');
-        });
-        
-        // Show Admin Login Page
-        showAdminLogin.addEventListener('click', (e) => {
-            e.preventDefault();
-            loginPage.classList.add('hidden');
-            signupPage.classList.add('hidden');
-            adminLoginPage.classList.remove('hidden');
-        });
-        
-        // Show Login Page from Admin
-        showLoginFromAdmin.addEventListener('click', (e) => {
-            e.preventDefault();
-            adminLoginPage.classList.add('hidden');
-            loginPage.classList.remove('hidden');
-            signupPage.classList.add('hidden');
-        });
-        
-        // Login Form Submission
-        loginForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            // Example demo flow:
-            // If a name was stored earlier (e.g., from signup), use it.
-            // Otherwise, derive a readable name from the email ID.
-            const email = document.getElementById('loginEmail').value;
-            const existing = localStorage.getItem('userName');
-            const derived = getNameFromEmail(email);
-            setUserName(existing || derived || 'User');
+        const timeAgo = ts => {
+            if(!ts) return 'Just now';
+            const s = Math.floor((Date.now() - ts) / 1000);
+            if(s < 60) return `${s}s ago`;
+            const m = Math.floor(s/60); if(m < 60) return `${m}m ago`;
+            const h = Math.floor(m/60); if(h < 24) return `${h}h ago`;
+            const d = Math.floor(h/24); return `${d}d ago`;
+        };
 
-            // Show app
-            loginPage.classList.add('hidden');
-            signupPage.classList.add('hidden');
-            adminLoginPage.classList.add('hidden');
-            appContainer.classList.remove('hidden');
+        /* --------------------------
+           Auth Storage (localStorage)
+           users: { [emailLower]: { email, name, batch, password, userId } }
+        ---------------------------*/
+        function getUsers(){
+            return JSON.parse(localStorage.getItem('users') || '{}');
+        }
+        function setUsers(users){
+            localStorage.setItem('users', JSON.stringify(users));
+        }
+        function currentUserId(){
+            return localStorage.getItem('userId') || '';
+        }
+        function userKey(email){ return (email || '').trim().toLowerCase(); }
+
+        /* --------------------------
+           Experiences & Bookmarks
+        ---------------------------*/
+        function getUserExperiences(){
+            return JSON.parse(localStorage.getItem('userExperiences') || '[]');
+        }
+        function setUserExperiences(arr){
+            localStorage.setItem('userExperiences', JSON.stringify(arr));
+        }
+        function getBookmarks(uid){
+            const all = JSON.parse(localStorage.getItem('bookmarks') || '{}');
+            return all[uid] || [];
+        }
+        function setBookmarks(uid, ids){
+            const all = JSON.parse(localStorage.getItem('bookmarks') || '{}');
+            all[uid] = ids;
+            localStorage.setItem('bookmarks', JSON.stringify(all));
+        }
+        function isBookmarked(uid, id){
+            const list = getBookmarks(uid);
+            return list.includes(id);
+        }
+
+        /* --------------------------
+           Rendering
+        ---------------------------*/
+        function fileLinksHTML(files){
+            if(!files || !files.length) return '';
+            return `<div class="file-links"><strong>Attachments:</strong> ` +
+                files.map((f, idx) => `<a href="${f.data}" download="${f.name}" target="_blank"><i class="fa-regular fa-file"></i> ${f.name}</a>`).join(' ') +
+                `</div>`;
+        }
+
+        function renderExperiences(experiences, container, {ownerOnly=false, showActions=true}={}){
+            container.innerHTML = '';
+            const uid = currentUserId();
+            experiences.forEach(exp => {
+                if(ownerOnly && exp.userId !== uid) return;
+
+                const wrap = document.createElement('div');
+                wrap.className = 'experience-item';
+
+                // safe text
+                const company = sanitize(exp.company);
+                const role = sanitize(exp.role);
+                const type = sanitize(exp.type);
+                const details = sanitize(exp.details);
+                const tips = sanitize(exp.tips);
+                const author = sanitize(exp.author);
+
+                wrap.innerHTML = `
+                    <div class="experience-header">
+                        <div class="company-info">
+                            <div class="company-logo">${company.charAt(0) || '?'}</div>
+                            <div>
+                                <h4>${company}</h4>
+                                <p>${role}</p>
+                            </div>
+                        </div>
+                        <span class="job-type">${type}</span>
+                    </div>
+                    <p>${details}</p>
+                    ${tips ? `<p><strong>Preparation Tips:</strong> ${tips}</p>` : ''}
+                    ${fileLinksHTML(exp.files)}
+                    <div class="experience-meta">
+                        <span>By: ${author || 'Anonymous'}</span>
+                        <span>${exp.timestamp ? timeAgo(exp.timestamp) : (exp.date || '')}</span>
+                    </div>
+                `;
+
+                if(showActions){
+                    const actions = document.createElement('div');
+                    actions.className = 'actions';
+
+                    // Bookmark toggle
+                    const bmBtn = document.createElement('button');
+                    bmBtn.className = 'btn btn-outline btn-sm';
+                    const bmState = isBookmarked(uid, exp.id);
+                    bmBtn.innerHTML = bmState ? `<i class="fas fa-star"></i> Saved` : `<i class="far fa-star"></i> Save`;
+                    bmBtn.addEventListener('click', () => {
+                        const list = getBookmarks(uid);
+                        if(list.includes(exp.id)){
+                            setBookmarks(uid, list.filter(x => x !== exp.id));
+                        } else {
+                            setBookmarks(uid, [...list, exp.id]);
+                        }
+                        loadExperiences(); // refresh all lists
+                    });
+                    actions.appendChild(bmBtn);
+
+                    // Delete (only for owner)
+                    if(exp.userId === uid){
+                        const delBtn = document.createElement('button');
+                        delBtn.className = 'btn btn-primary btn-sm';
+                        delBtn.innerHTML = `<i class="fas fa-trash"></i> Delete`;
+                        delBtn.addEventListener('click', () => {
+                            if(confirm('Delete this experience?')){
+                                const all = getUserExperiences();
+                                const filtered = all.filter(e => e.id !== exp.id);
+                                setUserExperiences(filtered);
+                                // also remove from bookmarks
+                                const list = getBookmarks(uid).filter(x => x !== exp.id);
+                                setBookmarks(uid, list);
+                                loadExperiences();
+                            }
+                        });
+                        actions.appendChild(delBtn);
+                    }
+
+                    wrap.appendChild(actions);
+                }
+
+                container.appendChild(wrap);
+            });
+        }
+
+        function loadExperiences(){
+            const uid = currentUserId();
+            const userExperiences = getUserExperiences();
+            const allExperiences = [...sampleExperiences, ...userExperiences];
+
+            renderExperiences(allExperiences, sharedExperiencesList, {ownerOnly:false, showActions:true});
+            renderExperiences(userExperiences, myExperiencesList, {ownerOnly:true, showActions:true});
+
+            // bookmarks
+            const bmIds = new Set(getBookmarks(uid));
+            const bmItems = allExperiences.filter(x => bmIds.has(x.id));
+            renderExperiences(bmItems, bookmarksList, {ownerOnly:false, showActions:true});
+        }
+
+        function switchSection(sectionId){
+            sections.forEach(s => s.classList.remove('active'));
+            const target = document.getElementById(`${sectionId}-section`);
+            if(target){ target.classList.add('active'); }
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if(link.getAttribute('data-section') === sectionId){
+                    link.classList.add('active');
+                }
+            });
+            if(['dashboard','share-experience','my-experiences','bookmarks'].includes(sectionId)){
+                loadExperiences();
+            }
+        }
+
+        /* --------------------------
+           Navigation
+        ---------------------------*/
+        showSignup.addEventListener('click', (e)=>{ e.preventDefault(); loginPage.classList.add('hidden'); signupPage.classList.remove('hidden'); adminLoginPage.classList.add('hidden'); });
+        showLogin.addEventListener('click', (e)=>{ e.preventDefault(); signupPage.classList.add('hidden'); loginPage.classList.remove('hidden'); adminLoginPage.classList.add('hidden'); });
+        showAdminLogin.addEventListener('click', (e)=>{ e.preventDefault(); loginPage.classList.add('hidden'); signupPage.classList.add('hidden'); adminLoginPage.classList.remove('hidden'); });
+        showLoginFromAdmin.addEventListener('click', (e)=>{ e.preventDefault(); adminLoginPage.classList.add('hidden'); loginPage.classList.remove('hidden'); signupPage.classList.add('hidden'); });
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const sectionId = link.getAttribute('data-section');
+                if(sectionId){ switchSection(sectionId); }
+            });
         });
-        
-        // Signup Form Submission
+
+        /* --------------------------
+           Auth: Signup / Login / Reset
+        ---------------------------*/
         signupForm.addEventListener('submit', (e) => {
             e.preventDefault();
-            const fullName = document.getElementById('signupName').value;
-            setUserName(fullName || 'User');
+            const name = sanitize(document.getElementById('signupName').value);
+            const email = sanitize(document.getElementById('signupEmail').value);
+            const pass = document.getElementById('signupPassword').value;
+            const pass2 = document.getElementById('signupConfirmPassword').value;
+            const batch = sanitize(document.getElementById('signupBatch').value);
 
-            // Show app
+            if(pass !== pass2){ alert('Passwords do not match'); return; }
+            if(pass.length < 8){ alert('Use at least 8 characters for password'); return; }
+
+            const users = getUsers();
+            const key = userKey(email);
+            if(users[key]){ alert('Account already exists with this email'); return; }
+
+            const uid = 'u_' + key;
+            users[key] = { email, name: name || getNameFromEmail(email) || 'User', batch, password: pass, userId: uid };
+            setUsers(users);
+
+            localStorage.setItem('userPoints', '1250');
+            setUserName(users[key].name, uid);
+
             signupPage.classList.add('hidden');
             loginPage.classList.add('hidden');
             adminLoginPage.classList.add('hidden');
             appContainer.classList.remove('hidden');
+
+            loadExperiences();
         });
-        
-        // Admin Login Form Submission
+
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = sanitize(document.getElementById('loginEmail').value);
+            const pass = document.getElementById('loginPassword').value;
+
+            const users = getUsers();
+            const key = userKey(email);
+            const record = users[key];
+
+            if(!record){ alert('No account found with this email. Please sign up.'); return; }
+            if(record.password !== pass){ alert('Incorrect password'); return; }
+
+            localStorage.setItem('userPoints', localStorage.getItem('userPoints') || '1250');
+            setUserName(record.name, record.userId);
+
+            loginPage.classList.add('hidden');
+            signupPage.classList.add('hidden');
+            adminLoginPage.classList.add('hidden');
+            appContainer.classList.remove('hidden');
+
+            loadExperiences();
+        });
+
+        resetPasswordLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            const email = prompt('Enter your registered email to reset password:');
+            if(!email) return;
+
+            const users = getUsers();
+            const key = userKey(email);
+            const record = users[key];
+            if(!record){ alert('No account found with this email.'); return; }
+
+            const newPass = prompt('Enter new password (min 8 characters):');
+            if(!newPass || newPass.length < 8){ alert('Password too short.'); return; }
+            const confirmPass = prompt('Confirm new password:');
+            if(newPass !== confirmPass){ alert('Passwords do not match.'); return; }
+
+            record.password = newPass;
+            users[key] = record;
+            setUsers(users);
+            alert('Password has been reset successfully. You can now login.');
+        });
+
+        /* --------------------------
+           Admin (demo)
+        ---------------------------*/
         adminLoginForm.addEventListener('submit', (e) => {
             e.preventDefault();
-            // For demo, redirect to login (in a real app, you'd show admin dashboard)
             alert('Admin login successful! Redirecting to admin dashboard in a real app.');
             adminLoginPage.classList.add('hidden');
             loginPage.classList.remove('hidden');
         });
-        
-        // Logout
+
         logoutBtn.addEventListener('click', (e) => {
             e.preventDefault();
             appContainer.classList.add('hidden');
             loginPage.classList.remove('hidden');
         });
 
-        // Initialize user display from previous session (if any)
+        /* --------------------------
+           Experience Form (with attachments)
+        ---------------------------*/
+        function readFilesAsData(files){
+            // Store as base64 (works offline + persists). For demo only.
+            const readers = [];
+            const results = [];
+            for(const file of files){
+                const extOk = /\.(pdf|jpg|jpeg)$/i.test(file.name);
+                if(!extOk) continue;
+                const reader = new FileReader();
+                readers.push(new Promise((resolve) => {
+                    reader.onload = () => {
+                        results.push({ name:file.name, type:file.type, data: reader.result });
+                        resolve();
+                    };
+                    reader.readAsDataURL(file);
+                }));
+            }
+            return Promise.all(readers).then(() => results);
+        }
+
+        experienceForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const companyName = sanitize(document.getElementById('companyName').value);
+            const jobRole = sanitize(document.getElementById('jobRole').value);
+            const jobType = sanitize(document.getElementById('jobType').value);
+            const experienceDetails = sanitize(document.getElementById('experienceDetails').value);
+            const preparationTips = sanitize(document.getElementById('preparationTips').value);
+            const isAnonymous = document.getElementById('anonymousToggle').checked;
+            const tipsFilesInput = document.getElementById('tipsFiles');
+
+            const userName = localStorage.getItem('userName') || 'User';
+            const userId = currentUserId() || 'user1';
+
+            // read selected files
+            const files = await readFilesAsData(tipsFilesInput.files || []);
+
+            const newExperience = {
+                id: Date.now(),
+                company: companyName,
+                role: jobRole,
+                type: jobType,
+                details: experienceDetails,
+                tips: preparationTips,
+                author: isAnonymous ? 'Anonymous' : userName,
+                timestamp: Date.now(),
+                userId,
+                files
+            };
+
+            const userExperiences = getUserExperiences();
+            userExperiences.push(newExperience);
+            setUserExperiences(userExperiences);
+
+            // points +50 on submit (demo)
+            const pts = parseInt(localStorage.getItem('userPoints') || '1250', 10) + 50;
+            localStorage.setItem('userPoints', String(pts));
+
+            loadExperiences();
+            experienceForm.reset();
+            alert('Your experience has been shared successfully!');
+        });
+         function getQuestions() {
+            return JSON.parse(localStorage.getItem("questions") || "[]");
+        }
+        function setQuestions(arr) {
+            localStorage.setItem("questions", JSON.stringify(arr));
+        }
+        function getComments() {
+            return JSON.parse(localStorage.getItem("comments") || "[]");
+        }
+        function setComments(arr) {
+            localStorage.setItem("comments", JSON.stringify(arr));
+        }
+
+        function renderQuestions(questions, container, { ownerOnly = false } = {}) {
+            container.innerHTML = "";
+            const uid = currentUserId();
+            const comments = getComments();
+
+            questions.forEach(q => {
+                if (ownerOnly && q.userId !== uid) return;
+
+                const div = document.createElement("div");
+                div.className = "experience-item"; // reuse style
+                const tags = q.tags && q.tags.length ? q.tags.map(t => `<span class="job-type">${sanitize(t)}</span>`).join(" ") : "";
+                div.innerHTML = `
+                    <div class="experience-header">
+                        <div class="company-info">
+                            <div class="company-logo">${sanitize(q.userName).charAt(0)}</div>
+                            <div><h4>${sanitize(q.title)}</h4><p>${sanitize(q.userName)}</p></div>
+                        </div>
+                        ${q.userId === uid ? `<button class="btn btn-sm btn-primary delete-q" data-id="${q.id}">Delete</button>` : ""}
+                    </div>
+                    <p>${sanitize(q.content)}</p>
+                    ${tags}
+                    <div class="experience-meta"><span>${timeAgo(q.timestamp)}</span></div>
+                    <div class="comments-list" id="comments-${q.id}">
+                        ${comments.filter(c => c.questionId === q.id).map(c => `
+                            <div class="comment-item" style="margin:10px 0; padding:8px; border:1px solid #ddd; border-radius:5px;">
+                                <strong>${sanitize(c.userName)}</strong>: ${sanitize(c.content)}
+                                ${c.userId === uid ? `<button class="btn btn-sm btn-outline delete-c" data-id="${c.id}" style="float:right;">Delete</button>` : ""}
+                            </div>
+                        `).join("")}
+                    </div>
+                    <form class="comment-form" data-qid="${q.id}" style="margin-top:10px;">
+                        <textarea class="form-control" rows="2" placeholder="Write a comment..." required></textarea>
+                        <button type="submit" class="btn btn-primary btn-sm" style="margin-top:5px;">Comment</button>
+                    </form>
+                `;
+
+                // delete question
+                const delQ = div.querySelector(".delete-q");
+                if (delQ) {
+                    delQ.addEventListener("click", () => {
+                        if (confirm("Delete this question?")) {
+                            setQuestions(getQuestions().filter(x => x.id !== q.id));
+                            loadQuestions();
+                        }
+                    });
+                }
+
+                // delete comments
+                div.querySelectorAll(".delete-c").forEach(btn => {
+                    btn.addEventListener("click", () => {
+                        const cid = btn.dataset.id;
+                        setComments(getComments().filter(c => c.id !== cid));
+                        loadQuestions();
+                    });
+                });
+
+                // add comment
+                const form = div.querySelector(".comment-form");
+                form.addEventListener("submit", e => {
+                    e.preventDefault();
+                    const txt = form.querySelector("textarea").value.trim();
+                    if (!txt) return;
+                    const newComment = {
+                        id: Date.now().toString(),
+                        questionId: q.id,
+                        userId: uid,
+                        userName: localStorage.getItem("userName") || "User",
+                        content: txt,
+                        timestamp: Date.now()
+                    };
+                    const all = getComments();
+                    all.push(newComment);
+                    setComments(all);
+
+                    // award points
+                    const pts = parseInt(localStorage.getItem("userPoints") || "0", 10) + 10;
+                    localStorage.setItem("userPoints", pts.toString());
+                    updateUserUI();
+
+                    loadQuestions();
+                });
+
+                container.appendChild(div);
+            });
+        }
+
+        function loadQuestions() {
+            const qs = getQuestions();
+            renderQuestions(qs, document.getElementById("all-questions-list"));
+            renderQuestions(qs, document.getElementById("my-questions-list"), { ownerOnly: true });
+        }
+
+        // Post new question
+        const questionForm = document.getElementById("questionForm");
+        if (questionForm) {
+            questionForm.addEventListener("submit", e => {
+                e.preventDefault();
+                const title = sanitize(document.getElementById("questionTitle").value);
+                const content = sanitize(document.getElementById("questionContent").value);
+                const tags = sanitize(document.getElementById("questionTags").value).split(",").map(t => t.trim()).filter(Boolean);
+                const uid = currentUserId();
+                const uname = localStorage.getItem("userName") || "User";
+
+                const newQ = {
+                    id: Date.now().toString(),
+                    title,
+                    content,
+                    tags,
+                    userId: uid,
+                    userName: uname,
+                    timestamp: Date.now()
+                };
+
+                const all = getQuestions();
+                all.push(newQ);
+                setQuestions(all);
+
+                // award points
+                const pts = parseInt(localStorage.getItem("userPoints") || "0", 10) + 20;
+                localStorage.setItem("userPoints", pts.toString());
+                updateUserUI();
+
+                questionForm.reset();
+                loadQuestions();
+                
+            });
+        }
+
+
+        /* --------------------------
+           Init
+        ---------------------------*/
         updateUserUI();
+        loadExperiences();
+        loadQuestions();
+        // If previously logged-in info present, keep them on login page until they log in with correct password.
+        // (As per requirement: must match stored password each time.)
     </script>
 </body>
 </html>
