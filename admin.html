@@ -13,26 +13,60 @@
       --accent: #7ec8e3;
       --background: #f9fafd;
       --card-bg: #fff;
+      --text: #333;
       --shadow: rgba(123, 104, 238, 0.2);
+      --border: #ddd;
     }
+    
+    .dark-theme {
+      --primary: #4a3cad;
+      --secondary: #5a4fdb;
+      --accent: #5ea8c8;
+      --background: #121212;
+      --card-bg: #1e1e1e;
+      --text: #f0f0f0;
+      --shadow: rgba(0, 0, 0, 0.5);
+      --border: #333;
+    }
+    
     * {margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI', sans-serif;}
-    body {background: var(--background); color:#333; display:flex; min-height:100vh;}
+    body {background: var(--background); color:var(--text); display:flex; min-height:100vh; transition: all 0.3s ease;}
+    
     /* Sidebar */
     .sidebar {
       width:240px; background: linear-gradient(to bottom, var(--primary), var(--secondary));
       color:white; padding:20px; position:fixed; top:0; bottom:0; left:0;
-      display:flex; flex-direction:column;
+      display:flex; flex-direction:column; z-index: 1000;
     }
     .sidebar h2 {text-align:center; margin-bottom:30px;}
-    .sidebar-menu {list-style:none;}
+    .sidebar-menu {list-style:none; flex-grow: 1;}
     .sidebar-menu li {margin:15px 0;}
     .sidebar-menu a {
       color:white; text-decoration:none; padding:10px; display:block; border-radius:5px;
       transition:background 0.3s;
     }
     .sidebar-menu a:hover, .sidebar-menu a.active {background:rgba(255,255,255,0.2);}
+    
+    .theme-toggle {
+      background: rgba(255, 255, 255, 0.1);
+      border: none;
+      color: white;
+      padding: 8px 12px;
+      border-radius: 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 20px;
+      transition: all 0.3s;
+    }
+    
+    .theme-toggle:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+    
     /* Main */
-    .main {margin-left:240px; padding:20px; flex:1;}
+    .main {margin-left:240px; padding:20px; flex:1; min-height: 100vh; display: flex; flex-direction: column;}
     h1 {margin-bottom:20px;}
     .cards {display:grid; grid-template-columns:repeat(auto-fit, minmax(200px,1fr)); gap:20px;}
     .card {
@@ -40,34 +74,153 @@
       box-shadow:0 5px 15px var(--shadow); text-align:center;
     }
     .card h3 {margin:10px 0;}
+    
     /* Table */
     table {width:100%; border-collapse:collapse; margin-top:20px;}
-    table, th, td {border:1px solid #ddd;}
+    table, th, td {border:1px solid var(--border);}
     th, td {padding:10px; text-align:left;}
     th {background:var(--secondary); color:white;}
+    
+    /* Buttons */
+    button {
+      padding: 6px 12px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    
+    .btn-approve {
+      background: #4CAF50;
+      color: white;
+    }
+    
+    .btn-reject {
+      background: #f44336;
+      color: white;
+    }
+    
+    .btn-delete {
+      background: #ff9800;
+      color: white;
+    }
+    
+    .btn-approve:hover, .btn-reject:hover, .btn-delete:hover {
+      opacity: 0.9;
+    }
+    
     /* Chart */
-    .chart-container {margin-top:30px; background:#fff; padding:20px; border-radius:10px; box-shadow:0 5px 15px var(--shadow);}
+    .chart-container {margin-top:30px; background:var(--card-bg); padding:20px; border-radius:10px; box-shadow:0 5px 15px var(--shadow);}
+    
+    /* Content Sections */
+    .content-section {
+      background: var(--card-bg);
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px var(--shadow);
+      margin-top: 20px;
+    }
+    
+    .section-title {
+      margin-bottom: 15px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+    }
+    
+    /* Footer */
+    footer {
+      background: var(--card-bg);
+      padding: 20px;
+      text-align: center;
+      margin-top: auto;
+      box-shadow: 0 -2px 10px var(--shadow);
+    }
+    
     /* Responsive */
+    @media(max-width:992px){
+      .sidebar{width:200px;}
+      .main{margin-left:200px;}
+    }
+    
     @media(max-width:768px){
-      .sidebar{position:static; width:100%; flex-direction:row; overflow-x:auto;}
-      .sidebar-menu{display:flex; gap:10px;}
-      .main{margin-left:0;}
+      .sidebar{position:fixed; width:70px; padding:10px; transform: translateX(-100%); transition: transform 0.3s ease;}
+      .sidebar.open{transform: translateX(0);}
+      .sidebar h2{font-size:16px;}
+      .sidebar-menu li a span{display:none;}
+      .sidebar-menu li a i{margin-right:0; font-size:20px;}
+      .main{margin-left:0; padding:15px;}
+      
+      .menu-toggle {
+        position: fixed;
+        top: 15px;
+        left: 15px;
+        z-index: 1100;
+        background: var(--primary);
+        color: white;
+        border: none;
+        border-radius: 4px;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+      }
+    }
+    
+    @media(min-width:769px){
+      .menu-toggle{display:none;}
+    }
+    
+    /* Form Styles */
+    .form-group {
+      margin-bottom: 15px;
+    }
+    
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: 500;
+    }
+    
+    .form-group input, .form-group select, .form-group textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      background: var(--card-bg);
+      color: var(--text);
+    }
+    
+    .form-actions {
+      margin-top: 20px;
+      text-align: right;
     }
   </style>
 </head>
 <body>
+  <!-- Mobile Menu Toggle -->
+  <button class="menu-toggle" onclick="toggleSidebar()">
+    <i class="fas fa-bars"></i>
+  </button>
+
   <!-- Sidebar -->
-  <aside class="sidebar">
-    <h2>Admin Panel</h2>
+  <aside class="sidebar" id="sidebar">
+    <h2>XShare Admin</h2>
     <ul class="sidebar-menu">
-      <li><a href="#" class="active"><i class="fas fa-chart-line"></i> Dashboard</a></li>
-      <li><a href="#"><i class="fas fa-users"></i> Users</a></li>
-      <li><a href="#"><i class="fas fa-share-alt"></i> Experiences</a></li>
-      <li><a href="#"><i class="fas fa-question-circle"></i> Questions</a></li>
-      <li><a href="#"><i class="fas fa-briefcase"></i> Jobs</a></li>
-      <li><a href="#"><i class="fas fa-file-alt"></i> Reports</a></li>
-      <li><a href="#"><i class="fas fa-cog"></i> Settings</a></li>
+      <li><a href="#" class="active"><i class="fas fa-chart-line"></i> <span>Dashboard</span></a></li>
+      <li><a href="#users-section"><i class="fas fa-users"></i> <span>Users</span></a></li>
+      <li><a href="#experiences-section"><i class="fas fa-share-alt"></i> <span>Experiences</span></a></li>
+      <li><a href="#questions-section"><i class="fas fa-question-circle"></i> <span>Questions</span></a></li>
+      <li><a href="#jobs-section"><i class="fas fa-briefcase"></i> <span>Jobs</span></a></li>
+      <li><a href="#reports-section"><i class="fas fa-file-alt"></i> <span>Reports</span></a></li>
+      <li><a href="#settings-section"><i class="fas fa-cog"></i> <span>Settings</span></a></li>
+      <li><a href="../index.html" onclick="logout()"><i class="fas fa-sign-out-alt"></i> <span>Logout</span></a></li>
     </ul>
+    
+    <button class="theme-toggle" onclick="toggleTheme()">
+      <i class="fas fa-moon"></i> <span>Toggle Theme</span>
+    </button>
   </aside>
 
   <!-- Main Content -->
@@ -98,9 +251,44 @@
       </div>
     </div>
 
-    <!-- Users Table -->
-    <div style="margin-top:30px;">
-      <h2>Recent Users</h2>
+    <!-- Users Section -->
+    <div class="content-section" id="users-section">
+      <h2 class="section-title">User Verification Requests</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Verification Documents</th>
+            <th>Submitted On</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Alice Johnson</td>
+            <td>alice@example.com</td>
+            <td><a href="#">ID_Proof.pdf</a></td>
+            <td>2025-09-01</td>
+            <td>
+              <button class="btn-approve">Approve</button>
+              <button class="btn-reject">Reject</button>
+            </td>
+          </tr>
+          <tr>
+            <td>Bob Smith</td>
+            <td>bob@example.com</td>
+            <td><a href="#">ID_Card.jpg</a></td>
+            <td>2025-09-03</td>
+            <td>
+              <button class="btn-approve">Approve</button>
+              <button class="btn-reject">Reject</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      
+      <h2 class="section-title" style="margin-top: 30px;">Recent Users</h2>
       <table>
         <thead>
           <tr>
@@ -117,53 +305,346 @@
             <td>alice@example.com</td>
             <td>User</td>
             <td>2025-08-10</td>
-            <td><button>Ban</button></td>
+            <td><button class="btn-reject">Ban</button></td>
           </tr>
           <tr>
             <td>Bob Smith</td>
             <td>bob@example.com</td>
             <td>User</td>
             <td>2025-08-12</td>
-            <td><button>Ban</button></td>
+            <td><button class="btn-reject">Ban</button></td>
           </tr>
           <tr>
             <td>Charlie</td>
             <td>charlie@example.com</td>
             <td>Moderator</td>
             <td>2025-08-15</td>
-            <td><button>Ban</button></td>
+            <td><button class="btn-reject">Ban</button></td>
           </tr>
         </tbody>
       </table>
     </div>
 
+    <!-- Experiences Section -->
+    <div class="content-section" id="experiences-section">
+      <h2 class="section-title">Experiences Pending Approval</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>User</th>
+            <th>Type</th>
+            <th>Submitted On</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Google Interview Experience</td>
+            <td>alice@example.com</td>
+            <td>Interview</td>
+            <td>2025-09-05</td>
+            <td>
+              <button class="btn-approve">Approve</button>
+              <button class="btn-reject">Reject</button>
+              <button>Preview</button>
+            </td>
+          </tr>
+          <tr>
+            <td>Hackathon Winning Strategy</td>
+            <td>bob@example.com</td>
+            <td>Hackathon</td>
+            <td>2025-09-06</td>
+            <td>
+              <button class="btn-approve">Approve</button>
+              <button class="btn-reject">Reject</button>
+              <button>Preview</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Questions Section -->
+    <div class="content-section" id="questions-section">
+      <h2 class="section-title">Questions for Admin</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Question</th>
+            <th>User</th>
+            <th>Submitted On</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>How to verify my profile?</td>
+            <td>alice@example.com</td>
+            <td>2025-09-01</td>
+            <td>
+              <button>Answer</button>
+              <button class="btn-delete">Delete</button>
+            </td>
+          </tr>
+          <tr>
+            <td>When will my experience be published?</td>
+            <td>bob@example.com</td>
+            <td>2025-09-03</td>
+            <td>
+              <button>Answer</button>
+              <button class="btn-delete">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Jobs Section -->
+    <div class="content-section" id="jobs-section">
+      <h2 class="section-title">Job Postings for Approval</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Company</th>
+            <th>Position</th>
+            <th>Submitted On</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Google</td>
+            <td>Software Engineer</td>
+            <td>2025-09-02</td>
+            <td>
+              <button class="btn-approve">Approve</button>
+              <button class="btn-reject">Reject</button>
+              <button>Preview</button>
+            </td>
+          </tr>
+          <tr>
+            <td>Microsoft</td>
+            <td>Product Manager</td>
+            <td>2025-09-04</td>
+            <td>
+              <button class="btn-approve">Approve</button>
+              <button class="btn-reject">Reject</button>
+              <button>Preview</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Reports Section -->
+    <div class="content-section" id="reports-section">
+      <h2 class="section-title">Reports & Analytics</h2>
+      
+      <div class="cards">
+        <div class="card">
+          <i class="fas fa-building fa-2x" style="color:var(--secondary);"></i>
+          <h3>45</h3>
+          <p>Registered Companies</p>
+        </div>
+        <div class="card">
+          <i class="fas fa-user-plus fa-2x" style="color:var(--secondary);"></i>
+          <h3>156</h3>
+          <p>New Users (30 days)</p>
+        </div>
+        <div class="card">
+          <i class="fas fa-gift fa-2x" style="color:var(--secondary);"></i>
+          <h3>89</h3>
+          <p>Gifts Redeemed</p>
+        </div>
+        <div class="card">
+          <i class="fas fa-graduation-cap fa-2x" style="color:var(--secondary);"></i>
+          <h3>234</h3>
+          <p>Course Enrollments</p>
+        </div>
+      </div>
+      
+      <div class="chart-container">
+        <h3>User Growth (Last 30 Days)</h3>
+        <canvas id="userChart"></canvas>
+      </div>
+      
+      <div class="chart-container" style="margin-top: 20px;">
+        <h3>Course Enrollment Stats</h3>
+        <canvas id="courseChart"></canvas>
+      </div>
+    </div>
+
+    <!-- Settings Section -->
+    <div class="content-section" id="settings-section">
+      <h2 class="section-title">Admin Settings</h2>
+      
+      <div class="form-group">
+        <label for="admin-name">Admin Name</label>
+        <input type="text" id="admin-name" value="Admin User">
+      </div>
+      
+      <div class="form-group">
+        <label for="admin-email">Email Address</label>
+        <input type="email" id="admin-email" value="admin@xshare.com">
+      </div>
+      
+      <div class="form-group">
+        <label for="admin-password">Change Password</label>
+        <input type="password" id="admin-password" placeholder="Enter new password">
+      </div>
+      
+      <div class="form-group">
+        <label for="admin-notifications">Notification Preferences</label>
+        <select id="admin-notifications">
+          <option>All notifications</option>
+          <option>Important only</option>
+          <option>None</option>
+        </select>
+      </div>
+      
+      <div class="form-actions">
+        <button class="btn-approve">Save Settings</button>
+        <button class="btn-reject">Cancel</button>
+      </div>
+    </div>
+
     <!-- Chart -->
     <div class="chart-container">
       <h2>User Growth</h2>
-      <canvas id="userChart"></canvas>
+      <canvas id="mainChart"></canvas>
     </div>
+    
+    <!-- Footer -->
+    <footer>
+      <p>&copy; 2025 XShare - Experience Sharing Platform. All rights reserved.</p>
+      <p>Admin Dashboard v2.0</p>
+    </footer>
   </main>
 
   <script>
-    // Chart.js Example
-    const ctx = document.getElementById('userChart').getContext('2d');
-    new Chart(ctx, {
-      type: 'line',
-      data: {
-        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
-        datasets: [{
-          label: 'New Users',
-          data: [30, 45, 60, 80, 100, 130, 160],
-          borderColor: '#6a5acd',
-          fill: false,
-          tension: 0.3
-        }]
-      },
-      options: {
-        responsive: true,
-        plugins: {legend: {display: true}},
-        scales: {y: {beginAtZero: true}}
+    // Theme Toggling
+    function toggleTheme() {
+      document.body.classList.toggle('dark-theme');
+      const icon = document.querySelector('.theme-toggle i');
+      if (document.body.classList.contains('dark-theme')) {
+        icon.classList.remove('fa-moon');
+        icon.classList.add('fa-sun');
+        localStorage.setItem('theme', 'dark');
+      } else {
+        icon.classList.remove('fa-sun');
+        icon.classList.add('fa-moon');
+        localStorage.setItem('theme', 'light');
       }
+    }
+    
+    // Check for saved theme preference
+    if (localStorage.getItem('theme') === 'dark') {
+      document.body.classList.add('dark-theme');
+      const icon = document.querySelector('.theme-toggle i');
+      icon.classList.remove('fa-moon');
+      icon.classList.add('fa-sun');
+    }
+    
+    // Sidebar toggle for mobile
+    function toggleSidebar() {
+      document.getElementById('sidebar').classList.toggle('open');
+    }
+    
+    // Logout function
+    function logout() {
+      localStorage.removeItem('adminToken');
+      // Redirect handled by link
+    }
+    
+    // Chart.js Implementation
+    document.addEventListener('DOMContentLoaded', function() {
+      // Main User Growth Chart
+      const ctx = document.getElementById('mainChart').getContext('2d');
+      new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+          datasets: [{
+            label: 'New Users',
+            data: [30, 45, 60, 80, 100, 130, 160],
+            borderColor: '#6a5acd',
+            fill: false,
+            tension: 0.3
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: {legend: {display: true}},
+          scales: {y: {beginAtZero: true}}
+        }
+      });
+      
+      // 30-Day User Growth Chart
+      const userCtx = document.getElementById('userChart').getContext('2d');
+      const dates = [];
+      for (let i = 29; i >= 0; i--) {
+        const date = new Date();
+        date.setDate(date.getDate() - i);
+        dates.push(date.toLocaleDateString('en-US', {month: 'short', day: 'numeric'}));
+      }
+      
+      const randomData = Array.from({length: 30}, () => Math.floor(Math.random() * 10));
+      const cumulativeData = randomData.reduce((acc, curr, i) => {
+        acc.push((acc[i-1] || 0) + curr);
+        return acc;
+      }, []);
+      
+      new Chart(userCtx, {
+        type: 'line',
+        data: {
+          labels: dates,
+          datasets: [{
+            label: 'Daily New Users',
+            data: randomData,
+            borderColor: '#6a5acd',
+            backgroundColor: 'rgba(106, 90, 205, 0.2)',
+            fill: true,
+            tension: 0.4
+          }, {
+            label: 'Total Users',
+            data: cumulativeData,
+            borderColor: '#4CAF50',
+            fill: false,
+            tension: 0.4
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: {legend: {display: true}},
+          scales: {y: {beginAtZero: true}}
+        }
+      });
+      
+      // Course Enrollment Chart
+      const courseCtx = document.getElementById('courseChart').getContext('2d');
+      new Chart(courseCtx, {
+        type: 'bar',
+        data: {
+          labels: ['Web Development', 'Data Science', 'UX Design', 'Cloud Computing', 'Cybersecurity'],
+          datasets: [{
+            label: 'Enrollments',
+            data: [65, 59, 80, 45, 56],
+            backgroundColor: [
+              'rgba(106, 90, 205, 0.7)',
+              'rgba(74, 60, 173, 0.7)',
+              'rgba(138, 127, 251, 0.7)',
+              'rgba(126, 200, 227, 0.7)',
+              'rgba(90, 79, 219, 0.7)'
+            ]
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: {legend: {display: false}},
+          scales: {y: {beginAtZero: true}}
+        }
+      });
     });
   </script>
 </body>
