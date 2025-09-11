@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XShare Leaderboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #6a5acd 0%, #8a7ffb 100%);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            color: white;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .back-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .leaderboard-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+        
+        .card-header {
+            background: linear-gradient(135deg, #4b3f72 0%, #6a5acd 100%);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .card-header h2 {
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+        }
+        
+        .card-content {
+            padding: 25px;
+        }
+        
+        .leaderboard-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            background: #f9fafd;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+        }
+        
+        .leaderboard-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .leaderboard-item.current-user {
+            background: linear-gradient(135deg, #e6e9ff 0%, #f0f4ff 100%);
+            border: 2px solid #8a7ffb;
+            box-shadow: 0 5px 15px rgba(138, 127, 251, 0.2);
+        }
+        
+        .rank {
+            width: 50px;
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #4b3f72;
+        }
+        
+        .rank-left {
+            order: 0;
+        }
+        
+        .rank-right {
+            order: 4;
+        }
+        
+        .rank-1 { color: #FFD700; }
+        .rank-2 { color: #C0C0C0; }
+        .rank-3 { color: #CD7F32; }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+            flex: 1;
+            order: 1;
+        }
+        
+        .avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #7ec8e3 0%, #8a7ffb 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-right: 15px;
+        }
+        
+        .user-details {
+            flex: 1;
+        }
+        
+        .user-name {
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+        
+        .user-title {
+            font-size: 0.9rem;
+            color: #777;
+        }
+        
+        .progress-container {
+            flex: 2;
+            height: 20px;
+            background: #eef2f7;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 0 15px;
+            order: 2;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        
+        .progress-bar {
+            height: 100%;
+            border-radius: 10px;
+            transition: width 1s ease-in-out;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .points {
+            width: 100px;
+            text-align: right;
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: #6a5acd;
+            order: 3;
+        }
+        
+        .filters {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+            gap: 10px;
+        }
+        
+        .filter-btn {
+            background: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .filter-btn.active {
+            background: #6a5acd;
+            color: white;
+        }
+        
+        .filter-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+        
+        .badge-gold {
+            background: #FFD700;
+            color: #333;
+        }
+        
+        .badge-silver {
+            background: #C0C0C0;
+            color: #333;
+        }
+        
+        .badge-bronze {
+            background: #CD7F32;
+            color: white;
+        }
+        
+        .ranking-toggle {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+        
+        .toggle-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            padding: 8px 15px;
+            border-radius: 30px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            backdrop-filter: blur(5px);
+            transition: all 0.3s ease;
+        }
+        
+        .toggle-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        @media (max-width: 768px) {
+            .leaderboard-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .progress-container {
+                width: 100%;
+                margin: 15px 0;
+                order: 2;
+            }
+            
+            .points {
+                text-align: left;
+                width: 100%;
+                order: 3;
+            }
+            
+            .user-info {
+                width: 100%;
+                margin-bottom: 10px;
+                order: 0;
+            }
+            
+            .rank {
+                order: 1;
+                margin-top: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <button class="back-button" onclick="window.history.back()">
+            <i class="fas fa-arrow-left"></i>
+        </button>
+        
+        <div class="header">
+            <h1>XShare Leaderboard</h1>
+            <p>See how you rank against other XShare users</p>
+        </div>
+        
+        <div class="ranking-toggle">
+            <button class="toggle-btn" id="rankingToggle">
+                <i class="fas fa-exchange-alt"></i> Toggle Ranking Position
+            </button>
+        </div>
+        
+        <div class="filters">
+            <button class="filter-btn active" data-filter="all">All Time</button>
+            <button class="filter-btn" data-filter="monthly">Monthly</button>
+            <button class="filter-btn" data-filter="weekly">Weekly</button>
+        </div>
+        
+        <div class="leaderboard-card">
+            <div class="card-header">
+                <h2>Top Contributors</h2>
+                <p>Earn points by sharing experiences and helping others</p>
+            </div>
+            
+            <div class="card-content" id="leaderboardContainer">
+                <!-- Leaderboard items will be generated here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sample leaderboard data for different time periods
+        const leaderboardData = {
+            all: [
+                { id: "user10", name: "Alex Johnson", title: "Senior Engineer at Google", points: 3240, avatar: "AJ" },
+                { id: "user11", name: "Sarah Williams", title: "Product Manager at Meta", points: 2850, avatar: "SW" },
+                { id: "user12", name: "Michael Chen", title: "Data Scientist at Netflix", points: 2760, avatar: "MC" },
+                { id: "user13", name: "Priya Sharma", title: "ML Engineer at Apple", points: 2520, avatar: "PS" },
+                { id: "user14", name: "David Kim", title: "UX Designer at Airbnb", points: 2310, avatar: "DK" },
+                { id: "user15", name: "Emma Rodriguez", title: "Software Developer", points: 2150, avatar: "ER" },
+                { id: "user16", name: "James Wilson", title: "Product Designer", points: 1980, avatar: "JW" },
+                { id: "user17", name: "Sophia Brown", title: "Data Analyst", points: 1840, avatar: "SB" },
+                { id: "user18", name: "Daniel Lee", title: "Frontend Developer", points: 1720, avatar: "DL" },
+                { id: "user19", name: "Olivia Martinez", title: "Backend Engineer", points: 1650, avatar: "OM" },
+                { id: "user20", name: "Robert Taylor", title: "Full Stack Developer", points: 1520, avatar: "RT" },
+                { id: "user21", name: "Emily Anderson", title: "UI/UX Designer", points: 1420, avatar: "EA" },
+                { id: "user22", name: "William Thomas", title: "DevOps Engineer", points: 1350, avatar: "WT" },
+                { id: "user23", name: "Ava Garcia", title: "Mobile Developer", points: 1280, avatar: "AG" },
+                { id: "user1", name: "You", title: "Software Engineer", points: 1250, avatar: "YO" }
+            ],
+            monthly: [
+                { id: "user11", name: "Sarah Williams", title: "Product Manager at Meta", points: 850, avatar: "SW" },
+                { id: "user12", name: "Michael Chen", title: "Data Scientist at Netflix", points: 760, avatar: "MC" },
+                { id: "user10", name: "Alex Johnson", title: "Senior Engineer at Google", points: 740, avatar: "AJ" },
+                { id: "user1", name: "You", title: "Software Engineer", points: 650, avatar: "YO" },
+                { id: "user13", name: "Priya Sharma", title: "ML Engineer at Apple", points: 620, avatar: "PS" },
+                { id: "user14", name: "David Kim", title: "UX Designer at Airbnb", points: 510, avatar: "DK" },
+                { id: "user15", name: "Emma Rodriguez", title: "Software Developer", points: 450, avatar: "ER" },
+                { id: "user16", name: "James Wilson", title: "Product Designer", points: 380, avatar: "JW" },
+                { id: "user17", name: "Sophia Brown", title: "Data Analyst", points: 340, avatar: "SB" },
+                { id: "user18", name: "Daniel Lee", title: "Frontend Developer", points: 320, avatar: "DL" }
+            ],
+            weekly: [
+                { id: "user1", name: "You", title: "Software Engineer", points: 250, avatar: "YO" },
+                { id: "user12", name: "Michael Chen", title: "Data Scientist at Netflix", points: 210, avatar: "MC" },
+                { id: "user11", name: "Sarah Williams", title: "Product Manager at Meta", points: 190, avatar: "SW" },
+                { id: "user13", name: "Priya Sharma", title: "ML Engineer at Apple", points: 170, avatar: "PS" },
+                { id: "user10", name: "Alex Johnson", title: "Senior Engineer at Google", points: 140, avatar: "AJ" },
+                { id: "user14", name: "David Kim", title: "UX Designer at Airbnb", points: 110, avatar: "DK" },
+                { id: "user15", name: "Emma Rodriguez", title: "Software Developer", points: 90, avatar: "ER" },
+                { id: "user16", name: "James Wilson", title: "Product Designer", points: 80, avatar: "JW" },
+                { id: "user17", name: "Sophia Brown", title: "Data Analyst", points: 70, avatar: "SB" },
+                { id: "user18", name: "Daniel Lee", title: "Frontend Developer", points: 60, avatar: "DL" }
+            ]
+        };
+
+        // Color palette for progress bars
+        const colors = [
+            "#FF6B6B", "#4ECDC4", "#45B7D1", "#FFBE0B", 
+            "#FB5607", "#FF006E", "#8338EC", "#3A86FF",
+            "#38B000", "#F15BB5", "#9B5DE5", "#00BBF9",
+            "#00F5D4", "#FEE440", "#E63946", "#A8DADC"
+        ];
+
+        // Global variables
+        let currentFilter = 'all';
+        let rankingOnLeft = true;
+
+        // Render leaderboard function
+        function renderLeaderboard() {
+            const container = document.getElementById('leaderboardContainer');
+            container.innerHTML = '';
+            
+            // Get data for current filter
+            const data = leaderboardData[currentFilter];
+            
+            // Sort by points
+            const sortedData = [...data].sort((a, b) => b.points - a.points);
+            
+            // Find max points for scaling
+            const maxPoints = Math.max(...sortedData.map(user => user.points));
+            
+            sortedData.forEach((user, index) => {
+                const isCurrentUser = user.name === "You";
+                const rank = index + 1;
+                
+                // Create leaderboard item
+                const item = document.createElement('div');
+                item.className = `leaderboard-item ${isCurrentUser ? 'current-user' : ''}`;
+                
+                // Calculate percentage for bar width
+                const percentage = (user.points / maxPoints) * 100;
+                
+                // Get color for progress bar
+                const colorIndex = index % colors.length;
+                const barColor = colors[colorIndex];
+                
+                // Add rank badge for top 3
+                let rankBadge = '';
+                if (rank === 1) {
+                    rankBadge = '<span class="badge badge-gold"><i class="fas fa-crown"></i> Gold</span>';
+                } else if (rank === 2) {
+                    rankBadge = '<span class="badge badge-silver"><i class="fas fa-award"></i> Silver</span>';
+                } else if (rank === 3) {
+                    rankBadge = '<span class="badge badge-bronze"><i class="fas fa-award"></i> Bronze</span>';
+                }
+                
+                // Determine rank position class
+                const rankPositionClass = rankingOnLeft ? 'rank-left' : 'rank-right';
+                
+                item.innerHTML = `
+                    <div class="rank ${rankPositionClass} rank-${rank}">${rank}</div>
+                    <div class="user-info">
+                        <div class="avatar">${user.avatar}</div>
+                        <div class="user-details">
+                            <div class="user-name">${user.name} ${rank <= 3 ? rankBadge : ''}</div>
+                            <div class="user-title">${user.title}</div>
+                        </div>
+                    </div>
+                    <div class="progress-container">
+                        <div class="progress-bar" style="width: ${percentage}%; background: ${barColor};"></div>
+                    </div>
+                    <div class="points">${user.points.toLocaleString()} pts</div>
+                `;
+                
+                container.appendChild(item);
+                
+                // Animate progress bars after a short delay
+                setTimeout(() => {
+                    const progressBar = item.querySelector('.progress-bar');
+                    progressBar.style.width = '0';
+                    setTimeout(() => {
+                        progressBar.style.width = `${percentage}%`;
+                    }, 50);
+                }, index * 100);
+            });
+        }
+
+        // Initialize leaderboard when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            renderLeaderboard();
+            
+            // Add filter button functionality
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    currentFilter = this.getAttribute('data-filter');
+                    renderLeaderboard();
+                });
+            });
+            
+            // Add ranking toggle functionality
+            const rankingToggle = document.getElementById('rankingToggle');
+            rankingToggle.addEventListener('click', function() {
+                rankingOnLeft = !rankingOnLeft;
+                renderLeaderboard();
+            });
+        });
+    </script>
+</body>
+</html>
