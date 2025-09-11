@@ -38,6 +38,7 @@
             --footer-bg: #0f0f1f;
             --footer-text: #e6e6ff;
         }
+        
 
         * { margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         body {
@@ -112,7 +113,14 @@
         header { background-color:var(--card-bg); box-shadow:0 2px 10px var(--shadow); position:sticky; top:0; z-index:100; }
         .navbar { display:flex; justify-content:space-between; align-items:center; padding:15px 0; }
         .logo { display:flex; align-items:center; gap:10px; }
-        .logo img { height:40px; }
+        .logo img {
+            height: 40px;
+            filter: brightness(1); /* Default for light mode */
+        }
+
+        [data-theme="dark"] .logo img {
+            filter: brightness(0) invert(1); /* Makes black logo white in dark mode */
+        }
         .logo h1 { color:var(--primary); font-size:24px; font-weight:700; }
         .nav-links { display:flex; gap:25px; }
         .nav-links a { text-decoration:none; color:var(--primary); font-weight:500; transition:color 0.3s; }
@@ -884,11 +892,11 @@
                         <div class="welcome-text">
                             <h2>Welcome back, <span id="userName">User</span>!</h2>
                             <p>Ready to continue your career preparation journey?</p>
-                        </div>
-                        <div class="points-badge">
-                            <i class="fas fa-star"></i>
-                            <span>245 Points</span>
-                        </div>
+                    </div>
+                        <a href="leader.html" class="points-badge">
+                        <i class="fas fa-star"></i>
+                        <span id="pointsValue">245 Points</span>
+                        </a>
                     </div>
 
                     <div class="graffiti-banner">
@@ -910,7 +918,7 @@
                                     <h3 class="course-title">Generative AI</h3>
                                     <p class="course-description">Master the fundamentals of generative AI models and applications.</p>
                                     <div class="course-meta">
-                                        <span class="course-price">$79.99</span>
+                                        <span class="course-price">₨799.99</span>
                                         <span class="course-rating">★★★★★</span>
                                     </div>
                                     <button class="btn btn-primary btn-full">Enroll Now</button>
@@ -924,7 +932,7 @@
                                     <h3 class="course-title">Data Structures & Algorithms</h3>
                                     <p class="course-description">Comprehensive guide to mastering DSA for coding interviews.</p>
                                     <div class="course-meta">
-                                        <span class="course-price">$69.99</span>
+                                        <span class="course-price">₨699.99</span>
                                         <span class="course-rating">★★★★☆</span>
                                     </div>
                                     <button class="btn btn-primary btn-full">Enroll Now</button>
@@ -938,7 +946,7 @@
                                     <h3 class="course-title">Prompt Engineering</h3>
                                     <p class="course-description">Learn to craft effective prompts for AI systems.</p>
                                     <div class="course-meta">
-                                        <span class="course-price">$59.99</span>
+                                        <span class="course-price">₨599.99</span>
                                         <span class="course-rating">★★★★★</span>
                                     </div>
                                     <button class="btn btn-primary btn-full">Enroll Now</button>
@@ -992,7 +1000,9 @@
                     <div class="card">
                         <div class="card-header">
                             <h3>Your Rewards</h3>
-                            <button class="btn btn-outline btn-sm">Redeem History</button>
+                            <a href="reward.html" class="back-button">
+                                <i class="fas fa-arrow-right"></i> Redeem History
+                             </a>
                         </div>
                         <p>Earn points by sharing experiences and answering questions. Redeem them for exciting rewards!</p>
                         <div class="rewards-container">
